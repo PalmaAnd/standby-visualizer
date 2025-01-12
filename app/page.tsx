@@ -20,6 +20,7 @@ export default function Home() {
   const [primaryHealthy, setPrimaryHealthy] = useState(true)
   const [secondaryHealthy, setSecondaryHealthy] = useState(true)
   const [timelineEvents, setTimelineEvents] = useState<Array<{ timestamp: Date; event: string; type: 'primary' | 'secondary' | 'system' }>>([])
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showComparison, setShowComparison] = useState(false)
 
   useEffect(() => {
@@ -187,14 +188,14 @@ export default function Home() {
             primaryHealthy={primaryHealthy}
             secondaryHealthy={secondaryHealthy}
           />
-          <div className="mt-4">
+          {/* TODO Fix arrow <div className="mt-4">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               onClick={() => setShowComparison(!showComparison)}
             >
               {showComparison ? "Hide Comparison Mode" : "Show Comparison Mode"}
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
       <Footer />

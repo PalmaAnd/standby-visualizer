@@ -65,7 +65,7 @@ export function ComparisonMode() {
                             </SelectContent>
                         </Select>
                         <div className="mt-2">
-                            <DataFlowVisualization {...config} />
+                            {config.standbyType !== 'custom' && <DataFlowVisualization {...config as Omit<StandbyConfig, 'standbyType'> & { standbyType: 'hot' | 'cold' | 'warm' }} />}
                         </div>
                     </div>
                 ))}
