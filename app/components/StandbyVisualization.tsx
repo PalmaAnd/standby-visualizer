@@ -19,6 +19,7 @@ export function StandbyVisualization({
   primaryHealthy,
   secondaryHealthy
 }: StandbyVisualizationProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [checkPosition, setCheckPosition] = useState(0)
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export function StandbyVisualization({
     <div className="bg-gray-100 p-4 rounded-lg shadow-lg">
       <div className="flex justify-around items-center h-64 relative">
         <ServerComponent label="Primary" isOn={primaryOn} isHealthy={primaryHealthy} />
-        <ArrowComponent standbyType={standbyType} primaryOn={primaryOn} secondaryOn={secondaryOn} />
+        <ArrowComponent standbyType={standbyType} primaryOn={primaryOn} secondaryOn={secondaryOn} primaryHealthy={false} secondaryHealthy={false} />
         <ServerComponent label="Secondary" isOn={secondaryOn} isHealthy={secondaryHealthy} />
       </div>
       <div className="mt-4 text-center">

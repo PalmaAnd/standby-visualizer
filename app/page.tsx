@@ -8,10 +8,10 @@ import { SystemLogs } from '@/components/SystemLogs'
 import { Timeline } from '@/components/Timeline'
 import { PredefinedScenarios } from '@/components/PredefinedScenarios'
 import { PerformanceMetrics } from '@/components/PerformanceMetrics'
-import { DataFlowVisualization } from '@/components/DataFlowVisualization'
 import { ComparisonMode } from '@/components/ComparisonMode'
 import { CostEstimationCalculator } from '@/components/CostEstimationCalculator'
 import { MultiRegionScenario } from '@/components/MultiRegionScenario'
+import { Footer } from '@/components/Footer'
 
 export default function Home() {
   const [standbyType, setStandbyType] = useState<'cold' | 'warm' | 'hot'>('cold')
@@ -197,6 +197,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   )
 }

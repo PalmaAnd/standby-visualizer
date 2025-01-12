@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 
 interface StandbyConfig {
-    standbyType: 'cold' | 'warm' | 'hot'
+    standbyType: 'cold' | 'warm' | 'hot' | 'custom'
     primaryOn: boolean
     secondaryOn: boolean
     primaryHealthy: boolean
@@ -34,13 +34,13 @@ export function ComparisonMode() {
         setConfigs([...configs, newConfig])
     }
 
-    const updateConfig = (index: number, key: keyof StandbyConfig, value: any) => {
+    const updateConfig = (index: number, key: keyof StandbyConfig, value: unknown) => {
         const newConfigs = [...configs]
         newConfigs[index] = { ...newConfigs[index], [key]: value }
         setConfigs(newConfigs)
     }
 
-    const updateNewConfig = (key: keyof StandbyConfig, value: any) => {
+    const updateNewConfig = (key: keyof StandbyConfig, value: unknown) => {
         setNewConfig({ ...newConfig, [key]: value })
     }
 
