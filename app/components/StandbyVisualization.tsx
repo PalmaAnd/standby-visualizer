@@ -12,9 +12,9 @@ interface StandbyVisualizationProps {
   secondaryHealthy: boolean
 }
 
-export function StandbyVisualization({ 
-  standbyType, 
-  primaryOn, 
+export function StandbyVisualization({
+  standbyType,
+  primaryOn,
   secondaryOn,
   primaryHealthy,
   secondaryHealthy
@@ -85,11 +85,11 @@ function ArrowComponent({ standbyType, primaryOn, secondaryOn }: StandbyVisualiz
 
   return (
     <motion.div
-      animate={{ 
+      animate={{
         x: [0, 20, 0],
         opacity: primaryOn && (standbyType === 'hot' || (standbyType === 'warm' && secondaryOn)) ? 1 : 0.3
       }}
-      transition={{ 
+      transition={{
         x: { repeat: Infinity, duration: 1.5 },
         opacity: { duration: 0.3 }
       }}
