@@ -56,7 +56,7 @@ export function Footer() {
                                             </p>
                                             <h3 className="text-lg font-semibold">3. Third-Party Services</h3>
                                             <p>
-                                                This website is hosted on Netlify and uses GitHub for version control. Please refer to their respective privacy policies for more information.
+                                                This website is hosted on GitHub Pages and uses GitHub for version control. Please refer to their respective privacy policies for more information.
                                             </p>
                                         </div>
                                     </DialogDescription>
