@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Server, ArrowRight, AlertTriangle } from 'lucide-react'
+import { Server, ArrowRight, ArrowLeft, AlertTriangle, User } from 'lucide-react'
 
 interface StandbyVisualizationProps {
   standbyType: 'cold' | 'warm' | 'hot'
@@ -21,6 +21,7 @@ export function StandbyVisualization({
 }: StandbyVisualizationProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [checkPosition, setCheckPosition] = useState(0)
+  const [arrowDirection, setArrowDirection] = useState<'left' | 'right'>('left')
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,11 +31,34 @@ export function StandbyVisualization({
     return () => clearInterval(interval)
   }, [standbyType])
 
+  useEffect(() => {
+    if (!primaryOn) {
+      if (standbyType === 'cold' && secondaryOn) {
+        setArrowDirection('right')
+      } else if (standbyType === 'warm') {
+        setTimeout(() => setArrowDirection('right'), 4000)
+      } else if (standbyType === 'hot') {
+        setArrowDirection('right')
+      }
+    } else {
+      setArrowDirection('left')
+    }
+  }, [primaryOn, secondaryOn, standbyType])
+
   return (
     <div className="bg-gray-100 p-4 rounded-lg shadow-lg">
       <div className="flex justify-around items-center h-64 relative">
         <ServerComponent label="Primary" isOn={primaryOn} isHealthy={primaryHealthy} />
-        <ArrowComponent standbyType={standbyType} primaryOn={primaryOn} secondaryOn={secondaryOn} primaryHealthy={false} secondaryHealthy={false} />
+        <div className="flex flex-col items-center">
+          <User size={48} className="text-blue-500 mb-4" />
+          <ArrowComponent
+            standbyType={standbyType}
+            primaryOn={primaryOn}
+            secondaryOn={secondaryOn}
+            direction={arrowDirection}
+            primaryHealthy={false} secondaryHealthy={false}
+          />
+        </div>
         <ServerComponent label="Secondary" isOn={secondaryOn} isHealthy={secondaryHealthy} />
       </div>
       <div className="mt-4 text-center">
@@ -76,26 +100,28 @@ function ServerComponent({ label, isOn, isHealthy }: { label: string; isOn: bool
   )
 }
 
-function ArrowComponent({ standbyType, primaryOn, secondaryOn }: StandbyVisualizationProps) {
+function ArrowComponent({ standbyType, primaryOn, secondaryOn, direction }: StandbyVisualizationProps & { direction: 'left' | 'right' }) {
   const getArrowColor = () => {
-    if (!primaryOn) return "text-gray-300"
+    if (!primaryOn && !secondaryOn) return "text-gray-300"
     if (standbyType === 'hot') return "text-green-500"
     if (standbyType === 'warm' && secondaryOn) return "text-yellow-500"
-    return "text-gray-300"
+    return "text-blue-500"
   }
+
+  const Arrow = direction === 'left' ? ArrowLeft : ArrowRight
 
   return (
     <motion.div
       animate={{
-        x: [0, 20, 0],
-        opacity: primaryOn && (standbyType === 'hot' || (standbyType === 'warm' && secondaryOn)) ? 1 : 0.3
+        x: direction === 'left' ? [0, -20, 0] : [0, 20, 0],
+        opacity: (primaryOn || secondaryOn) ? 1 : 0.3
       }}
       transition={{
         x: { repeat: Infinity, duration: 1.5 },
         opacity: { duration: 0.3 }
       }}
     >
-      <ArrowRight size={48} className={getArrowColor()} />
+      <Arrow size={48} className={getArrowColor()} />
     </motion.div>
   )
 }
