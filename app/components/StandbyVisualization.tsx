@@ -32,7 +32,7 @@ export function StandbyVisualization({
   }, [standbyType])
 
   useEffect(() => {
-    if (!primaryOn) {
+    if (!primaryOn || !primaryHealthy) {
       if (standbyType === 'cold' && secondaryOn) {
         setArrowDirection('right')
       } else if (standbyType === 'warm') {

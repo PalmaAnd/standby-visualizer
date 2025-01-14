@@ -61,19 +61,24 @@ export default function Home() {
 
     const handleFailover = () => {
       if (!primaryOn || !primaryHealthy) {
+        addTimelineEvent('User lost connection to Primary server', 'primary')
         if (standbyType === 'cold') {
           timer = setTimeout(() => {
             setSecondaryOn(true)
             addTimelineEvent('Secondary server activated (Cold Standby)', 'system')
+            addTimelineEvent('User requested connection to Secondary server', 'primary')
           }, 7000)
         } else if (standbyType === 'warm') {
           timer = setTimeout(() => {
             setSecondaryOn(true)
-            addTimelineEvent('Secondary server activated (Warm Standby)', 'system')
+            addTimelineEvent('Secondary server activated and ready(Warm Standby)', 'system')
+            addTimelineEvent('User succesfully connection to Secondary server', 'primary')
           }, 4000)
         } else if (standbyType === 'hot') {
           timer = setTimeout(() => {
-            addTimelineEvent('Secondary server handling all requests (Hot Standby)', 'system')
+            setSecondaryOn(true)
+            addTimelineEvent('Secondary server is in synch with Primary (Hot Standby)', 'system')
+            addTimelineEvent('User instantly connects to Secondary server with no down time', 'primary')
           }, 2000)
         }
       }
