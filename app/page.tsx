@@ -1,17 +1,19 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { StandbyVisualization } from './components/StandbyVisualization'
-import { Controls } from './components/Controls'
-import { Legend } from './components/Legend'
-import { SystemLogs } from './components/SystemLogs'
-import { Timeline } from './components/Timeline'
-import { PredefinedScenarios } from './components/PredefinedScenarios'
-import { PerformanceMetrics } from './components/PerformanceMetrics'
-import { ComparisonMode } from './components/ComparisonMode'
-import { CostEstimationCalculator } from './components/CostEstimationCalculator'
-import { MultiRegionScenario } from './components/MultiRegionScenario'
-import { Footer } from './components/Footer'
+import { StandbyVisualization } from '@/components/StandbyVisualization'
+import { Controls } from '@/components/Controls'
+import { Legend } from '@/components/Legend'
+import { SystemLogs } from '@/components/SystemLogs'
+import { Timeline } from '@/components/Timeline'
+import { PredefinedScenarios } from '@/components/PredefinedScenarios'
+import { PerformanceMetrics } from '@/components/PerformanceMetrics'
+import { ComparisonMode } from '@/components/ComparisonMode'
+import { CostEstimationCalculator } from '@/components/CostEstimationCalculator'
+import { MultiRegionScenario } from '@/components/MultiRegionScenario'
+import { Footer } from '@/components/Footer'
+import { MTTRCalculator } from '@/components/MTTRCalculator'
+import { PerformanceComparisonDashboard } from '@/components/PerformanceComparisonDashboard'
 
 export default function Home() {
   const [standbyType, setStandbyType] = useState<'cold' | 'warm' | 'hot'>('cold')
@@ -169,6 +171,7 @@ export default function Home() {
                 secondaryOn={secondaryOn}
               />
               <MultiRegionScenario />
+              <PerformanceComparisonDashboard />
             </>
           )}
         </div>
@@ -193,14 +196,7 @@ export default function Home() {
             primaryHealthy={primaryHealthy}
             secondaryHealthy={secondaryHealthy}
           />
-          {/* <div className="mt-4">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => setShowComparison(!showComparison)}
-            >
-              {showComparison ? "Hide Comparison Mode" : "Show Comparison Mode"}
-            </button>
-          </div> */}
+          <MTTRCalculator />
         </div>
       </div>
       <Footer />
