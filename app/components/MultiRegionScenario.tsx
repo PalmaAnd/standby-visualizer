@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Server, ArrowRight } from 'lucide-react'
 import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface RegionConfig {
     name: string
@@ -13,35 +14,78 @@ interface RegionConfig {
     secondaryHealthy: boolean
 }
 
+const regions = [
+    'US East',
+    'US West',
+    'Europe',
+    'Asia Pacific',
+    'South America'
+]
+
 export function MultiRegionScenario() {
-    const [regions, setRegions] = useState<RegionConfig[]>([
+    const [activeRegions, setActiveRegions] = useState<RegionConfig[]>([
         { name: 'US East', primaryOn: true, secondaryOn: true, primaryHealthy: true, secondaryHealthy: true },
         { name: 'Europe', primaryOn: true, secondaryOn: true, primaryHealthy: true, secondaryHealthy: true },
     ])
 
     const toggleServer = (regionIndex: number, serverType: 'primary' | 'secondary', stateType: 'On' | 'Healthy') => {
-        const newRegions = [...regions]
+        const newRegions = [...activeRegions]
         const key = `${serverType}${stateType}` as keyof RegionConfig
         newRegions[regionIndex] = { ...newRegions[regionIndex], [key]: !newRegions[regionIndex][key] }
-        setRegions(newRegions)
+        setActiveRegions(newRegions)
     }
 
     const simulateDisaster = () => {
-        const newRegions = regions.map(region => ({
+        const newRegions = activeRegions.map(region => ({
             ...region,
             primaryOn: false,
             primaryHealthy: false,
         }))
-        setRegions(newRegions)
+        setActiveRegions(newRegions)
+    }
+
+    const addRegion = (regionName: string) => {
+        if (activeRegions.length < 5 && !activeRegions.find(r => r.name === regionName)) {
+            setActiveRegions([...activeRegions, {
+                name: regionName,
+                primaryOn: true,
+                secondaryOn: true,
+                primaryHealthy: true,
+                secondaryHealthy: true
+            }])
+        }
+    }
+
+    const removeRegion = (regionIndex: number) => {
+        setActiveRegions(activeRegions.filter((_, index) => index !== regionIndex))
+    }
+
+    const simulateFailover = () => {
+        const newRegions = activeRegions.map(region => {
+            if (!region.primaryOn || !region.primaryHealthy) {
+                return {
+                    ...region,
+                    primaryOn: false,
+                    primaryHealthy: false,
+                    secondaryOn: true,
+                    secondaryHealthy: true
+                }
+            }
+            return region
+        })
+        setActiveRegions(newRegions)
     }
 
     return (
         <div className="bg-white p-4 rounded-lg shadow-lg mt-4">
             <h3 className="text-lg font-medium mb-2">Multi-Region Disaster Recovery Scenario</h3>
             <div className="space-y-4">
-                {regions.map((region, index) => (
+                {activeRegions.map((region, index) => (
                     <div key={index} className="border p-4 rounded-lg">
-                        <h4 className="text-md font-semibold mb-2">{region.name}</h4>
+                        <div className="flex justify-between items-center mb-2">
+                            <h4 className="text-md font-semibold">{region.name}</h4>
+                            <Button variant="outline" size="sm" onClick={() => removeRegion(index)}>Remove</Button>
+                        </div>
                         <div className="flex justify-around items-center">
                             <ServerIcon
                                 label="Primary"
@@ -62,7 +106,24 @@ export function MultiRegionScenario() {
                     </div>
                 ))}
             </div>
-            <Button onClick={simulateDisaster} className="mt-4">Simulate Disaster</Button>
+            <div className="mt-4 space-y-2">
+                <Select onValueChange={addRegion}>
+                    <SelectTrigger>
+                        <SelectValue placeholder="Add a region" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {regions.map(region => (
+                            <SelectItem key={region} value={region} disabled={activeRegions.some(r => r.name === region)}>
+                                {region}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+                <div className="flex space-x-2">
+                    <Button onClick={simulateDisaster} className="flex-1">Simulate Disaster</Button>
+                    <Button onClick={simulateFailover} className="flex-1">Simulate Failover</Button>
+                </div>
+            </div>
         </div>
     )
 }

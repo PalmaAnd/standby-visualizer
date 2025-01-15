@@ -43,7 +43,7 @@ export function StandbyVisualization({
     } else {
       setArrowDirection('left')
     }
-  }, [primaryOn, secondaryOn, standbyType])
+  }, [primaryHealthy, primaryOn, secondaryOn, standbyType])
 
   return (
     <div className="bg-gray-100 p-4 rounded-lg shadow-lg">
