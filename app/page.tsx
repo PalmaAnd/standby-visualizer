@@ -8,7 +8,6 @@ import { SystemLogs } from '@/components/SystemLogs'
 import { Timeline } from '@/components/Timeline'
 import { PredefinedScenarios } from '@/components/PredefinedScenarios'
 import { PerformanceMetrics } from '@/components/PerformanceMetrics'
-import { ComparisonMode } from '@/components/ComparisonMode'
 import { CostEstimationCalculator } from '@/components/CostEstimationCalculator'
 import { MultiRegionScenario } from '@/components/MultiRegionScenario'
 import { Footer } from '@/components/Footer'
@@ -22,8 +21,6 @@ export default function Home() {
   const [primaryHealthy, setPrimaryHealthy] = useState(true)
   const [secondaryHealthy, setSecondaryHealthy] = useState(true)
   const [timelineEvents, setTimelineEvents] = useState<Array<{ timestamp: Date; event: string; type: 'primary' | 'secondary' | 'system' }>>([])
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [showComparison, setShowComparison] = useState(false)
 
   useEffect(() => {
     if (standbyType === 'cold') {
@@ -145,35 +142,30 @@ export default function Home() {
       <h1 className="text-3xl font-bold mb-4">Standby System Visualization</h1>
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="w-full lg:w-2/3">
-          {showComparison ? (
-            <ComparisonMode />
-          ) : (
-            <>
-              <StandbyVisualization
-                standbyType={standbyType}
-                primaryOn={primaryOn}
-                secondaryOn={secondaryOn}
-                primaryHealthy={primaryHealthy}
-                secondaryHealthy={secondaryHealthy}
-              />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <Legend />
-                <PerformanceMetrics
-                  standbyType={standbyType}
-                  primaryOn={primaryOn}
-                  secondaryOn={secondaryOn}
-                />
-              </div>
-              <Timeline events={timelineEvents} />
-              <CostEstimationCalculator
-                standbyType={standbyType}
-                primaryOn={primaryOn}
-                secondaryOn={secondaryOn}
-              />
-              <MultiRegionScenario />
-              <PerformanceComparisonDashboard />
-            </>
-          )}
+
+          <StandbyVisualization
+            standbyType={standbyType}
+            primaryOn={primaryOn}
+            secondaryOn={secondaryOn}
+            primaryHealthy={primaryHealthy}
+            secondaryHealthy={secondaryHealthy}
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <Legend />
+            <PerformanceMetrics
+              standbyType={standbyType}
+              primaryOn={primaryOn}
+              secondaryOn={secondaryOn}
+            />
+          </div>
+          <Timeline events={timelineEvents} />
+          <CostEstimationCalculator
+            standbyType={standbyType}
+            primaryOn={primaryOn}
+            secondaryOn={secondaryOn}
+          />
+          <MultiRegionScenario />
+          <PerformanceComparisonDashboard />
         </div>
         <div className="w-full lg:w-1/3">
           <Controls
