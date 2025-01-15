@@ -50,7 +50,7 @@ export function Controls({
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="hot" id="hot" />
-              <Label htmlFor="hot">Hot (2s)</Label>
+              <Label htmlFor="hot">Hot (instant)</Label>
               <InfoTooltip content="Both servers are active and processing requests simultaneously." />
             </div>
           </RadioGroup>

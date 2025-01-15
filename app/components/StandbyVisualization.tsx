@@ -144,7 +144,7 @@ function getStandbyInterval(standbyType: 'cold' | 'warm' | 'hot') {
     case 'warm':
       return 4
     case 'hot':
-      return 2
+      return 0
   }
 }
 
