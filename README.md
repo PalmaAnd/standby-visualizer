@@ -90,8 +90,6 @@ The Standby System Visualization tool is an interactive web application designed
 
 7. **Multi-Region Scenario**: Explore a more complex, geographically distributed architecture in the multi-region disaster recovery scenario.
 
-8. **Comparison Mode**: Toggle the comparison mode to view different standby configurations side-by-side.
-
 ## Contributing
 
 We welcome contributions to the Standby System Visualization project! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to get started.
