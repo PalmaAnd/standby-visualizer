@@ -20,7 +20,7 @@ export default function Home() {
   const [secondaryOn, setSecondaryOn] = useState(false)
   const [primaryHealthy, setPrimaryHealthy] = useState(true)
   const [secondaryHealthy, setSecondaryHealthy] = useState(true)
-  const [timelineEvents, setTimelineEvents] = useState<Array<{ timestamp: Date; event: string; type: 'primary' | 'secondary' | 'system' }>>([])
+  const [timelineEvents, setTimelineEvents] = useState<Array<{ timestamp: Date; event: string; type: 'primary' | 'secondary' | 'system' | 'error' }>>([])
 
   useEffect(() => {
     if (standbyType === 'cold') {
@@ -58,9 +58,12 @@ export default function Home() {
   useEffect(() => {
     let timer: NodeJS.Timeout
 
+    const randomErrorMessage = ["501 Internal Server Error", "502 Bad Gateway", "503 Service Unavailable", "504 Gateway Timeout", "505 HTTP Version Not Supported", "506 Variant Also Negotiates", "507 Insufficient Storage", "508 Loop Detected", "510 Not Extended", "511 Network Authentication Required"]
+
     const handleFailover = () => {
       if (!primaryOn || !primaryHealthy) {
-        addTimelineEvent('User lost connection to Primary server', 'primary')
+        addTimelineEvent('User lost connection to Primary server', 'error')
+        addTimelineEvent(randomErrorMessage[Math.floor(Math.random() * randomErrorMessage.length)], 'error')
         if (standbyType === 'cold') {
           timer = setTimeout(() => {
             setSecondaryOn(true)
@@ -90,7 +93,7 @@ export default function Home() {
     }
   }, [primaryOn, primaryHealthy, standbyType])
 
-  const addTimelineEvent = (event: string, type: 'primary' | 'secondary' | 'system') => {
+  const addTimelineEvent = (event: string, type: 'primary' | 'secondary' | 'system' | 'error') => {
     setTimelineEvents(prev => [{
       timestamp: new Date(),
       event,
