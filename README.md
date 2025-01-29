@@ -16,7 +16,6 @@ The Standby System Visualization tool is an interactive web application designed
 - **Configurable Parameters**: Adjust check intervals, simulate server failures and recoveries, and modify performance metrics.
 - **Cost Estimation**: Utilize the built-in calculator to estimate costs based on cloud provider, instance size, storage type, and network usage.
 - **Multi-Region Disaster Recovery**: Simulate disaster scenarios across multiple regions to understand system resilience.
-- **Comparison Mode**: Compare different standby configurations to determine the most efficient setup.
 - **Predefined Scenarios**: Quickly explore common scenarios with predefined settings.
 - **Responsive Design**: Access the tool seamlessly on both desktop and mobile devices.
 
