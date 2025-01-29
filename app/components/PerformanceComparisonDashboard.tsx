@@ -7,25 +7,25 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 
 const performanceData = {
     cold: {
-        responseTime: 180,
-        throughput: 500,
-        availability: 99.5,
-        costPerHour: 10,
-        recoveryTime: 120
+        responseTime: 155,
+        throughput: 49,
+        availability: 88,
+        costPerHour: 5.44,
+        recoveryTime: 129
     },
     warm: {
-        responseTime: 80,
-        throughput: 1000,
-        availability: 99.9,
-        costPerHour: 25,
-        recoveryTime: 15
+        responseTime: 115,
+        throughput: 106,
+        availability: 95,
+        costPerHour: 28.78,
+        recoveryTime: 11
     },
     hot: {
-        responseTime: 30,
-        throughput: 2000,
-        availability: 99.999,
-        costPerHour: 50,
-        recoveryTime: 1
+        responseTime: 34,
+        throughput: 183,
+        availability: 99,
+        costPerHour: 79.65,
+        recoveryTime: 3
     },
 }
 
@@ -33,7 +33,7 @@ const metricLabels = {
     responseTime: "Response Time (ms)",
     throughput: "Throughput (req/s)",
     availability: "Availability (%)",
-    costPerHour: "Cost per Hour ($)",
+    costPerHour: "Cost per Hour (€)",
     recoveryTime: "Recovery Time (min)"
 }
 

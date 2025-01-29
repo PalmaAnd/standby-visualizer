@@ -7,7 +7,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 interface TimelineEvent {
     timestamp: Date
     event: string
-    type: 'primary' | 'secondary' | 'system'
+    type: 'primary' | 'secondary' | 'system' | 'error'
 }
 
 interface TimelineProps {
@@ -70,7 +70,7 @@ export function Timeline({ events }: TimelineProps) {
     )
 }
 
-function getEventColor(type: 'primary' | 'secondary' | 'system') {
+function getEventColor(type: 'primary' | 'secondary' | 'system' | 'error') {
     switch (type) {
         case 'primary':
             return 'bg-blue-500'
@@ -78,6 +78,8 @@ function getEventColor(type: 'primary' | 'secondary' | 'system') {
             return 'bg-green-500'
         case 'system':
             return 'bg-yellow-500'
+        case 'error':
+            return 'bg-red-500'
     }
 }
 
